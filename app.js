@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const { urlencoded, json } = require('body-parser');
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
+const Product = require("./api/model/product");
 
 
 mongoose.connect('mongodb+srv://swagatkumarmishra:d8CtAhCtxfSWSgO1@netflix-gpt-db.p7jqe6z.mongodb.net/ecommerce',{useNewUrlParser:true, useUnifiedTopology: true});
@@ -39,5 +40,21 @@ app.get('*',(req,res,next)=>{
     message:'bad request'
   })
 })
+
+app.get('/product',(req,res,next)=>{
+  Product.find()
+      .select('_id title productCode description price ctgry photo')
+      .then(result=>{
+        res.status(200).json({
+          product:result
+        })
+      })
+      .catch(err=>{
+        console.log(err);
+        res.status(500).json({
+          error:err
+        })
+      })
+});
 
 module.exports = app;

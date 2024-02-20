@@ -12,21 +12,6 @@ cloudinary.config({
 
 
 // get all products
-router.get('/',(req,res,next)=>{
-  Product.find()
-  .select('_id title productCode description price ctgry photo')
-  .then(result=>{
-    res.status(200).json({
-      product:result
-    })
-  })
-  .catch(err=>{
-    console.log(err);
-    res.status(500).json({
-      error:err
-    })
-  })
-});
 
 //get single product by id
 router.get('/:id',(req,res,next)=>{
